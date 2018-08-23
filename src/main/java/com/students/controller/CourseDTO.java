@@ -1,18 +1,15 @@
 package com.students.controller;
 
-import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 
 public class CourseDTO {
 
-	private List<WorkDTO> works;
 
 	private Long id;
 	private String name;
 	private Date publishedDate;
-	private String fileExtension;
 	private Boolean hasContent;
+
 
 	public Long getId() {
 		return id;
@@ -38,14 +35,6 @@ public class CourseDTO {
 		this.publishedDate = publishedDate;
 	}
 
-	public String getFileExtension() {
-		return fileExtension;
-	}
-
-	public void setFileExtension(String fileExtension) {
-		this.fileExtension = fileExtension;
-	}
-
 	public Boolean getHasContent() {
 		return hasContent;
 	}
@@ -54,11 +43,4 @@ public class CourseDTO {
 		this.hasContent = hasContent;
 	}
 
-	public List<WorkDTO> getWorks() {
-		return works;
-	}
-
-	public void setWorks(List<WorkDTO> works) {
-		this.works = works;
-	}
 }

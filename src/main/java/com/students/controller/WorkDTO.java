@@ -1,8 +1,5 @@
 package com.students.controller;
 
-import com.students.entities.Student;
-
-import javax.persistence.*;
 import java.util.List;
 
 public class WorkDTO {

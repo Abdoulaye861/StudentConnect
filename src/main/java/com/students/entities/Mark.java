@@ -13,9 +13,7 @@ public class Mark {
 	@ManyToOne
 	private Teacher evaluator;
 
-	@OneToOne
-	private Work work;
-	
+
 	public Mark(String markedDate) {
 		super();
 		this.markedDate = markedDate;
@@ -55,11 +53,5 @@ public class Mark {
 		this.evaluator = evaluator;
 	}
 
-	public Work getWork() {
-		return work;
-	}
 
-	public void setWork(Work work) {
-		this.work = work;
-	}
 }

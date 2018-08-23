@@ -2,9 +2,14 @@ package com.students.application;
 
 import com.students.controller.CourseDTO;
 import com.students.dao.CourseRepository;
+import com.students.dao.TeacherRepository;
 import com.students.entities.Course;
+import com.students.entities.Teacher;
 import com.students.infrastructure.util.OrikaBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +24,10 @@ public class CourseApplicationServices {
 	@Autowired
 	private CourseRepository courseRepository;
 
+
+    @Autowired
+    TeacherRepository teacherRepository;
+
 	@Autowired
     OrikaBeanMapper mapper;
 	public List<CourseDTO> getCourses(){
@@ -31,7 +40,8 @@ public class CourseApplicationServices {
 		return  dtos;
 	}
 
-	public CourseDTO create(String name, MultipartFile file){
+	public CourseDTO create(Long teacheid, String name, MultipartFile file){
+        Teacher teacher = teacherRepository.findOne(teacheid);
 		Course s = new Course();
 		s.setName(name);
 		int dot = file.getOriginalFilename().lastIndexOf(".");
@@ -40,7 +50,8 @@ public class CourseApplicationServices {
 		s.setPublishedDate(new Date());
 		try {
 			s.setData(file.getBytes());
-			courseRepository.save(s);
+			teacher.addCourse(s);
+			teacherRepository.save(teacher);
 			return  mapper.convertDTO( s, CourseDTO.class);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -68,5 +79,22 @@ public class CourseApplicationServices {
 		return true;
 	}
 
+	public HttpEntity<byte[]> getCourseContent(Long id) {
+		Course course = courseRepository.findOne(id);
+		String fileName = course.getFileName();
+		byte[] documentBody = course.getData();
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(MediaType.APPLICATION_PDF);
+		header.set(HttpHeaders.CONTENT_DISPOSITION,
+				"attachment; filename=" + fileName.replace(" ", "_"));
+		header.setContentLength(documentBody.length);
 
+		return new HttpEntity<>(documentBody, header);
+	}
+
+    public List<CourseDTO> getCourses(Long teacheid) {
+        Teacher teacher = teacherRepository.findOne(teacheid);
+        return mapper.convertListDTO(teacher.getCourses(), CourseDTO.class);
+
+    }
 }

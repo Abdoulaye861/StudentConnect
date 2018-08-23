@@ -2,46 +2,41 @@ package com.students.controller;
 
 import com.students.application.CourseApplicationServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
+
+//@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 @RestController
-@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
-public class CourseConnectController {
+public class CourseConnectController extends  BaseController {
 	@Autowired
 	CourseApplicationServices courseApplicationServices;
 
-	@RequestMapping(value="/course", method=RequestMethod.GET)
-	public List<CourseDTO> getcourses(){
+	@RequestMapping(value="/teacher/{teacheid}/courses", method=RequestMethod.GET)
+	public List<CourseDTO> getcourses(@PathVariable Long teacheid){
+		return  courseApplicationServices.getCourses(teacheid);
+	}
+
+
+	@RequestMapping(value="/courses", method=RequestMethod.GET)
+	public List<CourseDTO> getAllCourses(){
 		return  courseApplicationServices.getCourses();
 	}
 	
 	@RequestMapping(value="/course/{id}", method=RequestMethod.GET)
-	public CourseDTO getcourses(@PathVariable Long id){
+	public CourseDTO getcourse(@PathVariable Long id){
 		return  courseApplicationServices.getCourse(id);
 	}
 
 
-	/*
     @RequestMapping(value="/course/{id}/content", method=RequestMethod.GET)
     @ResponseBody
-    public void  getCourseContent(HttpServletResponse response, @PathVariable Long id){
-        byte[] bytes = courseApplicationServices.getCourseContent(id);
-        response.setContentType("text/pdf");
-        response.addHeader("Content-Disposition", "inline;filename=" + id + ".pdf");
-
-        try{
-            response.getOutputStream().write(bytes);
-        } catch (IOException e){
-            throw  new RuntimeException(e);
-        }
+    public HttpEntity<byte[]> getCourseContent( @PathVariable Long id){
+        return  courseApplicationServices.getCourseContent(id);
     }
-
-*/
 
 	/*
 	@RequestMapping(value="/course/create/{name}", method=RequestMethod.POST)
@@ -49,10 +44,10 @@ public class CourseConnectController {
 	}
 */
 
-    @RequestMapping(value="/course/create", method=RequestMethod.POST,  consumes={"multipart/form-data"})
-    public CourseDTO create(@RequestPart("file") MultipartFile file, @RequestPart("name") String  name){
+    @RequestMapping(value="/teacher/{teacheid}/course/create", method=RequestMethod.POST,  consumes={"multipart/form-data"})
+    public CourseDTO create(@PathVariable Long teacheid ,@RequestPart("file") MultipartFile file, @RequestPart("name") String  name){
 
-    	return  courseApplicationServices.create(name, file);
+    	return  courseApplicationServices.create(teacheid, name, file);
     }
 
 

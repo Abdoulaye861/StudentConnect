@@ -1,7 +1,6 @@
 package com.students.entities;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -84,6 +83,10 @@ public class Course {
 
 	public void setWork(List<Work> work) {
 		this.work = work;
+	}
+
+	public Boolean getHasContent() {
+		return getFileName() != null;
 	}
 
 }
