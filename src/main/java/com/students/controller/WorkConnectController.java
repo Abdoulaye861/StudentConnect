@@ -33,17 +33,18 @@ public class WorkConnectController extends  BaseController{
     }
 
 
-
-	/*
-	@RequestMapping(value="/course/create/{name}", method=RequestMethod.POST)
-	public CourseDTO create(@PathVariable String name){ return  courseApplicationServices.create(name);
+	@RequestMapping(value="/work/hasWork/{studentid}/{courseid}", method=RequestMethod.GET)
+	@ResponseBody
+	public boolean hasWork( @PathVariable Long studentid,  @PathVariable Long courseid ){
+		return  workApplicationServices.hasWork(studentid,courseid);
 	}
-*/
 
-    @RequestMapping(value="/work/create", method=RequestMethod.POST,  consumes={"multipart/form-data"})
-    public WorkDTO create(@RequestPart("file") MultipartFile file){
 
-    	return  workApplicationServices.create(file.getOriginalFilename(), file);
+
+    @RequestMapping(value="/student/work/create", method=RequestMethod.POST)
+    public WorkDTO create(@RequestParam("studentid") Long studentid, @RequestParam("courseid") Long courseid, @RequestParam("file") MultipartFile file){
+
+    	return  workApplicationServices.create(studentid, courseid, file.getOriginalFilename(), file);
     }
 
 

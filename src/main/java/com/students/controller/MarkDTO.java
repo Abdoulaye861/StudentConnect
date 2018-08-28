@@ -2,14 +2,14 @@ package com.students.controller;
 
 public class MarkDTO {
 
-	private long id;
+	private Long id;
 	private String markedDate;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

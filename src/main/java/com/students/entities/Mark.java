@@ -21,7 +21,6 @@ public class Mark {
 
 	public Mark() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {
@@ -41,7 +40,6 @@ public class Mark {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 

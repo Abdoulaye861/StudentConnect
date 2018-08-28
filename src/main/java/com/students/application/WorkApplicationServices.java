@@ -1,7 +1,11 @@
 package com.students.application;
 
 import com.students.controller.WorkDTO;
+import com.students.dao.CourseRepository;
+import com.students.dao.StudentRepository;
 import com.students.dao.WorkRepository;
+import com.students.entities.Course;
+import com.students.entities.Student;
 import com.students.entities.Work;
 import com.students.infrastructure.util.OrikaBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,14 @@ public class WorkApplicationServices {
 	private WorkRepository workRepository;
 
 	@Autowired
+	private StudentRepository studentRepository;
+
+
+	@Autowired
+	private CourseRepository courseRepository;
+
+
+	@Autowired
     OrikaBeanMapper mapper;
 	public List<WorkDTO> getWorks(){
 		return mapper.convertListDTO(workRepository.findAll(),WorkDTO.class);
@@ -34,17 +46,24 @@ public class WorkApplicationServices {
 		return  dtos;
 	}
 
-	public WorkDTO create(String name, MultipartFile file){
-		Work s = new Work();
-		s.setFileName(name);
+	public WorkDTO create(Long studentid, Long courseid,String name, MultipartFile file){
+		Student student = studentRepository.findOne(studentid);
+		Course course = courseRepository.findOne(courseid);
+		if(student == null || course == null){
+		  throw new RuntimeException("student or course is null");
+		}
+		Work work = new Work();
+		work.setFileName(name);
 		int dot = file.getOriginalFilename().lastIndexOf(".");
 		String ext =  file.getOriginalFilename().substring(dot);
-		s.setFileName(name + ext);
-		s.setUploadedDate(new Date());
+		work.setFileName(name + ext);
+		work.setUploadedDate(new Date());
+		work.setStudent(student);
+		work.setCourse(course);
 		try {
-			s.setData(file.getBytes());
-			workRepository.save(s);
-			return  mapper.convertDTO( s, WorkDTO.class);
+			work.setData(file.getBytes());
+			workRepository.save(work);
+			return  mapper.convertDTO( work, WorkDTO.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,16 +72,16 @@ public class WorkApplicationServices {
 	}
 
 	public WorkDTO save( WorkDTO c){
-		Work s;
+		Work work;
 		if(c.getId()!= null) {
-		s = workRepository.findOne(c.getId());
-		mapper.map(c, s);
+		work = workRepository.findOne(c.getId());
+		mapper.map(c, work);
 		}
 		else {
-			s = mapper.convertDTO(c, Work.class);
+			work = mapper.convertDTO(c, Work.class);
 		}
-		workRepository.save(s);
-		return  mapper.convertDTO( s, WorkDTO.class);
+		workRepository.save(work);
+		return  mapper.convertDTO( work, WorkDTO.class);
 	}
 	
 	
@@ -83,5 +102,17 @@ public class WorkApplicationServices {
 		header.setContentLength(documentBody.length);
 
 		return new HttpEntity<>(documentBody, header);
+	}
+
+	public boolean hasWork(Long studentid, Long courseid) {
+		Student student = studentRepository.findOne(studentid);
+		if (student.getWorks() != null){
+			for (Work work: student.getWorks()){
+				if (work.getCourse().getId() == courseid){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
