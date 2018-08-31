@@ -18,7 +18,14 @@ public class WorkConnectController extends  BaseController{
 	public List<WorkDTO> getworks(){
 		return  workApplicationServices.getWorks();
 	}
-	
+
+
+	@RequestMapping(value="/teacher/{teacherid}/{studentid}/marks", method=RequestMethod.GET)
+	public List<WorkAndMarkDTO> getAllStudentWorksForTeacher(@PathVariable Long teacherid,  @PathVariable Long studentid){
+		return  workApplicationServices.getAllStudentWorksForTeacher(teacherid, studentid);
+	}
+
+
 	@RequestMapping(value="/work/{id}", method=RequestMethod.GET)
 	public WorkDTO getwork(@PathVariable Long id){
 		return  workApplicationServices.getWork(id);
@@ -38,7 +45,6 @@ public class WorkConnectController extends  BaseController{
 	public boolean hasWork( @PathVariable Long studentid,  @PathVariable Long courseid ){
 		return  workApplicationServices.hasWork(studentid,courseid);
 	}
-
 
 
     @RequestMapping(value="/student/work/create", method=RequestMethod.POST)

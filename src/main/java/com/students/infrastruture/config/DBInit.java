@@ -79,6 +79,7 @@ public class DBInit {
 
 	 Mark e = new Mark();
 	 e.setMarkedDate("26/6/2018");
+	 e.setMarkValue(12d);
 	 stephane.addMarks(e);
 	 d.setMark(e);
 	 teacherRepository.save(stephane);

@@ -7,7 +7,8 @@ public class Mark {
 	
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	private Long id;
+	private  Double markValue;
 	private String markedDate;
 
 	@ManyToOne
@@ -23,11 +24,11 @@ public class Mark {
 		super();
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -37,6 +38,14 @@ public class Mark {
 
 	public void setMarkedDate(String markedDate) {
 		this.markedDate = markedDate;
+	}
+
+	public Double getMarkValue() {
+		return markValue;
+	}
+
+	public void setMarkValue(Double markValue) {
+		this.markValue = markValue;
 	}
 
 	public static void main(String[] args) {

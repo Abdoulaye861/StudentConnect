@@ -1,5 +1,6 @@
 package com.students.application;
 
+import com.students.controller.WorkAndMarkDTO;
 import com.students.controller.WorkDTO;
 import com.students.dao.CourseRepository;
 import com.students.dao.StudentRepository;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -114,5 +116,27 @@ public class WorkApplicationServices {
 			}
 		}
 		return false;
+	}
+
+	public List<WorkAndMarkDTO> getAllStudentWorksForTeacher(Long teacherid , Long studentid) {
+		List<WorkAndMarkDTO> works = new ArrayList<>();
+		Student student = studentRepository.findOne(studentid);
+		if(student.getWorks() != null){
+			for(Work work: student.getWorks()){
+				if(work.getCourse().getPublisher().getId()== teacherid){
+					WorkAndMarkDTO dto = new WorkAndMarkDTO();
+					dto.setCourseid(work.getCourse().getId());
+					dto.setCourseName(work.getCourse().getName());
+					dto.setWorkid(work.getId());
+					dto.setWorkFileName(work.getFileName());
+					if(work.getMark() != null){
+						dto.setMarkid(work.getMark().getId());
+						dto.setMarkValue(work.getMark().getMarkValue());
+					}
+					works.add(dto);
+				}
+			}
+		}
+		return  works;
 	}
 }

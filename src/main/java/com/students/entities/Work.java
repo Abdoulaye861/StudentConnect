@@ -18,9 +18,6 @@ public class Work {
  private byte[] data;
 
 
-
- @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
  @ManyToOne
  private Student student;
 
