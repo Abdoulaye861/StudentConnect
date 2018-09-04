@@ -21,7 +21,7 @@ public class Work {
  @ManyToOne
  private Student student;
 
- @OneToOne
+ @OneToOne(cascade = CascadeType.ALL)
  private Mark mark;
 
  @ManyToOne

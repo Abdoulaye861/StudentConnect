@@ -26,6 +26,14 @@ public class WorkConnectController extends  BaseController{
 	}
 
 
+	// Display student Work
+	@RequestMapping(value="/student/{studentid}/work", method=RequestMethod.GET)
+	public List<WorkAndMarkDTO> getAllStudentWorksForStudent(@PathVariable Long studentid ){
+		return  workApplicationServices.getAllStudentWorksForStudent(studentid);
+	}
+
+
+
 	@RequestMapping(value="/work/{id}", method=RequestMethod.GET)
 	public WorkDTO getwork(@PathVariable Long id){
 		return  workApplicationServices.getWork(id);
@@ -52,6 +60,12 @@ public class WorkConnectController extends  BaseController{
 
     	return  workApplicationServices.create(studentid, courseid, file.getOriginalFilename(), file);
     }
+
+	@RequestMapping(value="/work/{workid}/mark", method=RequestMethod.POST)
+	public WorkDTO setMark(@PathVariable Long workid, @RequestParam("mark") Double mark ){
+
+		return  workApplicationServices.setMark(workid, mark);
+	}
 
 
 	@RequestMapping(value="/work", method=RequestMethod.PUT)

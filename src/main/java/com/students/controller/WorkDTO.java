@@ -4,69 +4,69 @@ import java.util.List;
 
 public class WorkDTO {
 
- private Long id;
- private String FileName;
- private String Extention;
- private String FileContent;
- private String UploadedDate;
+    private Long id;
+    private String FileName;
+    private String Extention;
+    private String FileContent;
+    private String UploadedDate;
 
- private MarkDTO marks;
- private  List<CourseDTO> courses;
+    private MarkDTO marks;
+    private CourseDTO courses;
 
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getFileName() {
-		return FileName;
-	}
+    public String getFileName() {
+        return FileName;
+    }
 
-	public void setFileName(String fileName) {
-		FileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        FileName = fileName;
+    }
 
-	public String getExtention() {
-		return Extention;
-	}
+    public String getExtention() {
+        return Extention;
+    }
 
-	public void setExtention(String extention) {
-		Extention = extention;
-	}
+    public void setExtention(String extention) {
+        Extention = extention;
+    }
 
-	public String getFileContent() {
-		return FileContent;
-	}
+    public String getFileContent() {
+        return FileContent;
+    }
 
-	public void setFileContent(String fileContent) {
-		FileContent = fileContent;
-	}
+    public void setFileContent(String fileContent) {
+        FileContent = fileContent;
+    }
 
-	public String getUploadedDate() {
-		return UploadedDate;
-	}
+    public String getUploadedDate() {
+        return UploadedDate;
+    }
 
-	public void setUploadedDate(String uploadedDate) {
-		UploadedDate = uploadedDate;
-	}
+    public void setUploadedDate(String uploadedDate) {
+        UploadedDate = uploadedDate;
+    }
 
-	public MarkDTO getMarks() {
-		return marks;
-	}
+    public MarkDTO getMarks() {
+        return marks;
+    }
 
-	public void setMarks(MarkDTO marks) {
-		this.marks = marks;
-	}
+    public void setMarks(MarkDTO marks) {
+        this.marks = marks;
+    }
 
-	public List<CourseDTO> getCourses() {
-		return courses;
-	}
+    public CourseDTO getCourses() {
+        return courses;
+    }
 
-	public void setCourses(List<CourseDTO> courses) {
-		this.courses = courses;
-	}
+    public void setCourses(CourseDTO courses) {
+        this.courses = courses;
+    }
 }
