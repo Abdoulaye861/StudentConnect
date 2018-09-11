@@ -71,7 +71,6 @@ public class DBInit {
 	 Work d = new Work();
 	 d.setFileName("Géometrie");
      d.setName("Haccounn");
-	 d.setFileContent("apiflo");
 	 d.setUploadedDate("25/08/2018");
 	 d.setData();
 	 erik.addWork(d);

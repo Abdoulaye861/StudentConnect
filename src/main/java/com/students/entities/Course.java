@@ -32,10 +32,6 @@ public class Course {
 		this.publisher = publisher;
 	}
 
-	public Course() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public Long getId() {
 		return id;
